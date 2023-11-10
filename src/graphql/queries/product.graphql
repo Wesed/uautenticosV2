@@ -1,0 +1,16 @@
+query Product($slug: String!) {
+  product (
+    where: {
+      slug: $slug
+    }
+  ) {
+    id
+    slug
+    name
+    price
+    size
+    images {
+      url
+    }
+}
+}
