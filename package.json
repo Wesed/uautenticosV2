@@ -11,12 +11,16 @@
   },
   "dependencies": {
     "@graphql-eslint/eslint-plugin": "^3.20.1",
+    "apollo-client": "^2.6.10",
+    "apollo-server": "^3.12.1",
     "graphql": "^16.8.1",
     "lucide-react": "^0.292.0",
     "next": "14.0.2",
     "react": "^18",
     "react-dom": "^18",
     "react-medium-image-zoom": "^5.1.8",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1",
     "urql": "^4.0.5"
   },
   "devDependencies": {
