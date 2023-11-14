@@ -16,16 +16,16 @@ const config: Config = {
       green500: '#00875f',
       green300: '#00b37e',
     },
-    backgroundImage: {
-      gradient: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
-    },
-    fontFamily: {
-      sans: 'var(--font-roboto)',
-    },
-    maxWidth: {
-      widthProject: '1280px',
-    },
     extend: {
+      backgroundImage: {
+        gradient: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
+      },
+      fontFamily: {
+        sans: 'var(--font-roboto)',
+      },
+      maxWidth: {
+        widthProject: '1280px',
+      },
       gridTemplateColumns: {
         products: 'repeat(auto-fit, 250px)',
         product: '1fr 20rem',
