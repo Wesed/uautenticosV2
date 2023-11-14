@@ -1,30 +1,30 @@
-import { ProductsDocument } from "@/graphql/generated/graphql";
-import { client } from "@/lib/urql";
-import { buildSchema } from 'type-graphql'
+const query = `
+  query Products {
+    products {
+      id
+      slug
+      name
+      size
+      price
+      images {
+        url
+      }
+    }
+  }
+  `
 
-export async function POST() {
-  const response = await fetch('https://api-sa-east-1.hygraph.com/v2/clok4dptf4o7n01upadree4jz/master', {
+export async function GET() {
+  const res = await fetch(process.env.NEXT_PUBLIC_HYGRAPH_API!, {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_HYGRAPH_TOKEN}`
     },
-    body: JSON.stringify({
-      query: `query Products {
-        products {
-          id
-          slug
-          name
-          size
-          price
-          images {
-            url
-          }
-        }
-      }`,
-    })
+    body: JSON.stringify({query}),
   })
-  const { data } = await response.json()
-  console.log('aq', data)
+
+  const { data } = await res.json()
   
-  return Response.json(data)
+  return Response.json(data.products)
 }

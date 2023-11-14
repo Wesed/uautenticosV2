@@ -1,4 +1,7 @@
 export function priceFormatter(price: number) {
-  const priceFormatted = `R$ ${price.toFixed(2)}`
+  const priceFormatted = price.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  })
   return priceFormatted
 }
