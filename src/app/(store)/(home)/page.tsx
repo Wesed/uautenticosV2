@@ -8,10 +8,9 @@ import { ImageProd } from "./ImageProd"
 
 async function getProducts(): Promise<Product[]> {
   const res = await api('/products', {
-    cache: 'no-cache'
-    // next: {
-    //   revalidate: 60 * 60 * 24 // 24 hours
-    // }
+    next: {
+      revalidate: 60 * 60 * 24 // 24 hours
+    }
   })
   const products = await res.json()
   return products
