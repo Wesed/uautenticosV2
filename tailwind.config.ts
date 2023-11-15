@@ -28,7 +28,7 @@ const config: Config = {
       },
       gridTemplateColumns: {
         products: 'repeat(auto-fit, 250px)',
-        product: '1fr 20rem',
+        product: 'minmax(44rem, 1fr) 20rem',
       },
       gridTemplateRows: {
         app: 'min-content max-content',

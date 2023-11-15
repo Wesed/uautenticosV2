@@ -1,27 +1,26 @@
-import { api } from "@/data/api"
-import { Product } from "@/data/types/product"
-import { priceFormatter } from "@/utils/priceFormatter"
-import { ShoppingBag } from "lucide-react"
-import Link from "next/link"
+import { api } from '@/data/api'
+import { Product } from '@/data/types/product'
+import { priceFormatter } from '@/utils/priceFormatter'
+import { ShoppingBag } from 'lucide-react'
+import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { ImageProd } from "./ImageProd"
+import { ImageProd } from './ImageProd'
 
 async function getProducts(): Promise<Product[]> {
   const res = await api('/products', {
     next: {
-      revalidate: 60 * 60 * 24 // 24 hours
-    }
+      revalidate: 60 * 60 * 24, // 24 hours
+    },
   })
   const products = await res.json()
   return products
 }
 
 export default async function Home() {
-
   const products = await getProducts()
 
   return (
-    <div className="grid grid-cols-products gap-10">
+    <div className='grid grid-cols-products gap-10'>
       {products?.map((prod) => (
         <Link
           key={prod.id}
@@ -43,9 +42,9 @@ export default async function Home() {
               'opacity-100 group-hover:translate-y-0',
             )}
           >
-            <div className="flex flex-col gap-1">
-              <strong className="text-sm">{prod.name}</strong>
-              <span className=" font-bold text-green300">
+            <div className='flex flex-col gap-1'>
+              <strong className='text-sm'>{prod.name}</strong>
+              <span className=' font-bold text-green300'>
                 {priceFormatter(prod.price)}
               </span>
             </div>

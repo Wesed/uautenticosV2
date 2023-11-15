@@ -19,12 +19,12 @@ export async function GET() {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_HYGRAPH_TOKEN}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_HYGRAPH_TOKEN}`,
     },
-    body: JSON.stringify({query}),
+    body: JSON.stringify({ query }),
   })
 
   const { data } = await res.json()
-  
+
   return Response.json(data.products)
 }

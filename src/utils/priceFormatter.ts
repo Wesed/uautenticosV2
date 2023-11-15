@@ -1,7 +1,10 @@
-export function priceFormatter(price: number) {
+export function priceFormatter(price: number, divide?: boolean) {
+  if (divide) {
+    price = (price * 1.1) / 3
+  }
   const priceFormatted = price.toLocaleString('pt-BR', {
     style: 'currency',
-    currency: 'BRL'
+    currency: 'BRL',
   })
   return priceFormatted
 }
