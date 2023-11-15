@@ -1,9 +1,9 @@
-import { Skeleton } from "@/components/skeleton";
-import { twMerge } from "tailwind-merge";
+import { Skeleton } from '@/components/skeleton'
+import { twMerge } from 'tailwind-merge'
 
 export default function HomeLoading() {
   return (
-    <div className="grid grid-cols-products gap-10">
+    <div className='grid grid-cols-products gap-10'>
       {[...Array(8)].map((_, i) => (
         <Skeleton
           key={i}

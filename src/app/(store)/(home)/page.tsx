@@ -24,7 +24,7 @@ export default async function Home() {
       {products?.map((prod) => (
         <Link
           key={prod.id}
-          href={`/product/${prod.slug}`}
+          href={`/products/${prod.slug}`}
           prefetch={false}
           className={twMerge(
             'h-[250px]',

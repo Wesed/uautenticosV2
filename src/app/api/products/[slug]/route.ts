@@ -25,7 +25,7 @@ export async function GET(
 ) {
   const slug = z.string().parse(params.slug)
 
-  console.log('oi', slug)
+  await new Promise((resolve) => setTimeout(resolve, 2000))
 
   const res = await fetch(process.env.NEXT_PUBLIC_HYGRAPH_API!, {
     method: 'POST',
@@ -43,6 +43,8 @@ export async function GET(
   })
 
   const { data } = await res.json()
+
+  const { product } = data
 
   if (!data) {
     return Response.json({ message: 'Produto nao encontrado' }, { status: 400 })

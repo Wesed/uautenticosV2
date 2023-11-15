@@ -9,7 +9,10 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-  title: 'Uautenticos',
+  title: {
+    template: '%s | Uautenticos',
+    default: 'Uautenticos',
+  },
 }
 
 export default function RootLayout({

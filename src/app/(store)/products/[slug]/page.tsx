@@ -1,10 +1,10 @@
 import { priceFormatter } from '@/utils/priceFormatter'
-import { twMerge } from 'tailwind-merge'
 import 'react-medium-image-zoom/dist/styles.css'
 import { api } from '@/data/api'
 import { Product } from '@/data/types/product'
 import { Images } from './images'
 import { Sizes } from './sizes'
+import { Metadata } from 'next'
 
 interface ProductProps {
   params: {
@@ -20,6 +20,17 @@ async function getProduct(slug: string): Promise<Product> {
   })
   const { product } = await res.json()
   return product
+}
+
+// Memoizacao | a chamada fetch acontece 1x nas duas chamadas
+export async function generateMetadata({
+  params,
+}: ProductProps): Promise<Metadata> {
+  const product = await getProduct(params.slug)
+
+  return {
+    title: product.name,
+  }
 }
 
 export default async function ProductPage({ params }: ProductProps) {
