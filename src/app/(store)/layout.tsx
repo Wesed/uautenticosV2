@@ -1,5 +1,6 @@
 import { Header } from '@/components/header'
 import '../globals.css'
+import { CartProvider } from '@/contexts/cart-context'
 
 export default function StoreLayout({
   children,
@@ -7,9 +8,11 @@ export default function StoreLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className='mx-auto grid min-h-screen w-full max-w-widthProject grid-rows-app gap-20 p-10'>
-      <Header />
-      {children}
-    </div>
+    <CartProvider>
+      <div className='mx-auto grid min-h-screen w-full max-w-widthProject grid-rows-app gap-20 p-10'>
+        <Header />
+        {children}
+      </div>
+    </CartProvider>
   )
 }
