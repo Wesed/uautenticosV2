@@ -35,14 +35,14 @@ export default async function ProductPage({ params }: ProductProps) {
 
         <div className='mt-8 flex flex-col items-start gap-4 text-sm text-gray400'>
           <div className='flex items-center gap-3'>
-            <span className='rounded-full bg-green500 px-5 py-2.5 text-base font-semibold text-gray100'>
+            <span className='rounded-full bg-gray100 px-5 py-2.5 text-base font-semibold text-black'>
               {priceFormatter(product.price)}
             </span>
             <p>No PIX ou dinheiro</p>
           </div>
           <p>
             Ou no cartão em até 3x de{'  '}
-            <span className='font-bold text-green300'>
+            <span className='font-bold text-gray100'>
               {priceFormatter(product.price, true)}
             </span>
           </p>
@@ -53,7 +53,7 @@ export default async function ProductPage({ params }: ProductProps) {
         <button
           type='button'
           // onClick={handleNewProduct}
-          className='mt-8 w-full rounded-lg bg-green500 py-5 text-lg  font-semibold text-white transition-colors hover:bg-green300'
+          className='mt-8 w-full rounded-lg bg-gray100 py-5 text-lg  font-semibold text-black transition-colors hover:bg-gray400'
         >
           Adicionar ao carrinho
         </button>

@@ -38,7 +38,7 @@ export function Sizes() {
               'cursor-pointer rounded-lg px-5 py-3 font-semibold',
               'hover:transition-all',
               'bg-gray800 hover:bg-gray800/60 hover:text-gray100',
-              'peer-checked:bg-green500 peer-checked:text-gray100',
+              'peer-checked:bg-gray100 peer-checked:text-black',
             )}
           >
             {size}
