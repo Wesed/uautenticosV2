@@ -35,33 +35,35 @@ export async function generateMetadata({
 }
 
 export default async function ProductPage({ params }: ProductProps) {
-  const product = await getProduct(params.slug)
+  const { id, images, name, price, sizes } = await getProduct(params.slug)
+
+  const imageUrl = images[0].url
 
   return (
     <main className='mx-auto grid max-w-widthProject grid-cols-product items-stretch gap-16'>
-      <Images srcProp={product.images} />
+      <Images srcProp={images} />
 
       <div className='flex flex-col items-start justify-start'>
-        <h2 className='text-3xl font-bold leading-tight'>{product.name}</h2>
-        <p className='mt-2 text-lg text-gray400'>product.description</p>
+        <h2 className='text-3xl font-bold leading-tight'>{name}</h2>
+        <p className='mt-2 text-lg text-gray400'>description</p>
 
         <div className='mt-8 flex flex-col items-start gap-4 text-sm text-gray400'>
           <div className='flex items-center gap-3'>
             <span className='rounded-full bg-gray100 px-5 py-2.5 text-base font-semibold text-black'>
-              {priceFormatter(product.price)}
+              {priceFormatter(price)}
             </span>
             <p>No PIX ou dinheiro</p>
           </div>
           <p>
             Ou no cartão em até 3x de{'  '}
             <span className='font-bold text-gray100'>
-              {priceFormatter(product.price, true)}
+              {priceFormatter(price, true)}
             </span>
           </p>
         </div>
 
         <Sizes />
-        <AddToCartButton />
+        <AddToCartButton product={{ id, imageUrl, name, price }} />
       </div>
     </main>
   )

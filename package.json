@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@graphql-eslint/eslint-plugin": "^3.20.1",
+    "@radix-ui/react-collapsible": "^1.0.3",
     "apollo-client": "^2.6.10",
     "apollo-server": "^3.12.1",
     "graphql": "^16.8.1",
