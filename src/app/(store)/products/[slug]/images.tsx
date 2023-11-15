@@ -1,21 +1,18 @@
 'use client'
+import { ImageProps } from '@/data/types/product'
 import Image from 'next/image'
 import Zoom from 'react-medium-image-zoom'
 import { twMerge } from 'tailwind-merge'
 
-interface ImageArrayProps {
-  images: string[]
-}
-
-export function Images({ images }: ImageArrayProps) {
+export function Images({ srcProp }: ImageProps) {
   return (
     <div
       className={twMerge(
         'grid grid-cols-2 gap-2',
-        `${images.length === 1 && 'flex justify-center'}`,
+        `${srcProp.length === 1 && 'flex justify-center'}`,
       )}
     >
-      {images.map((img, i) => (
+      {srcProp.map((img, i) => (
         <div
           key={i}
           className={twMerge(

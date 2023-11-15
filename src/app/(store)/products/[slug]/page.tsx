@@ -38,7 +38,7 @@ export default async function ProductPage({ params }: ProductProps) {
 
   return (
     <main className='mx-auto grid max-w-widthProject grid-cols-product items-stretch gap-16'>
-      <Images images={product.images} />
+      <Images srcProp={product.images} />
 
       <div className='flex flex-col items-start justify-start'>
         <h2 className='text-3xl font-bold leading-tight'>{product.name}</h2>

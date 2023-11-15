@@ -1,3 +1,5 @@
+import { Product } from '@/data/types/product'
+
 const query = `
   query Products {
     products {
@@ -26,5 +28,12 @@ export async function GET() {
 
   const { data } = await res.json()
 
-  return Response.json(data.products)
+  const products = data.products.map((prod: Product) => {
+    return {
+      ...prod,
+      images: prod.images.map((image) => image.url),
+    }
+  })
+
+  return Response.json(products)
 }

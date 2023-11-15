@@ -1,11 +1,8 @@
 'use client'
 
+import { ImageProps } from '@/data/types/product'
 import Image from 'next/image'
 import { useState } from 'react'
-
-interface ImageProps {
-  srcProp: string[]
-}
 
 export function ImageProd({ srcProp }: ImageProps) {
   const [src, setSrc] = useState(srcProp[0].url)
