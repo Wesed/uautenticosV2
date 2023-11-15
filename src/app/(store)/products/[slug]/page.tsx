@@ -2,9 +2,10 @@ import { priceFormatter } from '@/utils/priceFormatter'
 import 'react-medium-image-zoom/dist/styles.css'
 import { api } from '@/data/api'
 import { Product } from '@/data/types/product'
-import { Images } from './images'
-import { Sizes } from './sizes'
+import { Images } from './components/images'
+import { Sizes } from './components/sizes'
 import { Metadata } from 'next'
+import { AddToCartButton } from './components/add-to-cart-button'
 
 interface ProductProps {
   params: {
@@ -60,14 +61,7 @@ export default async function ProductPage({ params }: ProductProps) {
         </div>
 
         <Sizes />
-
-        <button
-          type='button'
-          // onClick={handleNewProduct}
-          className='mt-8 w-full rounded-lg bg-gray100 py-5 text-lg  font-semibold text-black transition-colors hover:bg-gray400'
-        >
-          Adicionar ao carrinho
-        </button>
+        <AddToCartButton />
       </div>
     </main>
   )

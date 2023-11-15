@@ -4,7 +4,7 @@ import { priceFormatter } from '@/utils/priceFormatter'
 import { ShoppingBag } from 'lucide-react'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { ImageProd } from './ImageProd'
+import { ImageProd } from './components/ImageProd'
 
 async function getProducts(): Promise<Product[]> {
   const res = await api('/products', {
