@@ -1,6 +1,6 @@
+import { useCart } from '@/contexts/cart-context'
 import { priceFormatter } from '@/utils/priceFormatter'
 import Image from 'next/image'
-import { useContext } from 'react'
 
 export interface ProductContainerProps {
   id: string
@@ -8,6 +8,7 @@ export interface ProductContainerProps {
   description: string
   price: number
   size: number
+  quantity: number
 }
 
 export function ProductContainer({
@@ -16,10 +17,13 @@ export function ProductContainer({
   description,
   price,
   size,
+  quantity,
 }: ProductContainerProps) {
-  // const handleDeleteProduct = () => {
-  //   deleteProduct(id, size)
-  // }
+  const { removeToCart } = useCart()
+
+  const handleDeleteProduct = () => {
+    removeToCart(id, size)
+  }
 
   return (
     <div className='flex items-start gap-5'>
@@ -28,12 +32,13 @@ export function ProductContainer({
       </div>
       <div className='flex flex-col items-start gap-1'>
         <span className='text-lg text-gray300'>{description}</span>
-        <span className=' text-gray300'>Tamanho: {size}</span>
+        <span className=' text-sm text-gray400'>Tamanho: {size}</span>
+        <span className=' text-sm text-gray400'>Quantidade: {quantity}</span>
         <strong className='mb-2 text-lg font-bold text-gray100'>
           {priceFormatter(price)}
         </strong>
         <button
-          // onClick={handleDeleteProduct}
+          onClick={handleDeleteProduct}
           className='font-bold text-green500 transition-colors hover:text-green300'
           data-target='.sidebar'
         >

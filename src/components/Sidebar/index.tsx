@@ -12,8 +12,6 @@ export function Sidebar() {
   const { items } = useCart()
   const [open, setOpen] = useState(false)
 
-  console.log(items)
-
   return (
     <div>
       <button
@@ -60,14 +58,14 @@ export function Sidebar() {
                   id={prod.productId}
                   image={prod.imageUrl}
                   description={prod.name}
+                  size={prod.size}
                   price={prod.price}
-                  // eslint-disable-next-line
-                  size={prod.size!}
+                  quantity={prod.quantity}
                 />
               ))}
             </div>
 
-            <div className='mt-8 flex flex-col gap-1'>
+            <div className='mt-8 flex flex-col gap-2'>
               Possui cupom de desconto?
               <input
                 type='text'

@@ -6,6 +6,7 @@ import { Images } from './components/images'
 import { Sizes } from './components/sizes'
 import { Metadata } from 'next'
 import { AddToCartButton } from './components/add-to-cart-button'
+import { SizeProvider } from '@/contexts/size-context'
 
 interface ProductProps {
   params: {
@@ -62,8 +63,10 @@ export default async function ProductPage({ params }: ProductProps) {
           </p>
         </div>
 
-        <Sizes />
-        <AddToCartButton product={{ id, imageUrl, name, price }} />
+        <SizeProvider>
+          <Sizes />
+          <AddToCartButton product={{ id, imageUrl, name, price }} />
+        </SizeProvider>
       </div>
     </main>
   )

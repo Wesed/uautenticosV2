@@ -5,6 +5,7 @@ interface CartItem {
   productId: string
   name: string
   price: number
+  size: number
   imageUrl: string
   quantity: number
 }
@@ -12,6 +13,7 @@ interface CartItem {
 interface CartContextType {
   items: CartItem[]
   addToCart: (product: CartItem) => void
+  removeToCart: (id: string, size: number) => void
 }
 
 const CartContext = createContext({} as CartContextType)
@@ -23,7 +25,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCartItems((state) => {
       // verify if product exists in cart
       const productInCart = state.some(
-        (item) => item.productId === product.productId,
+        (item) =>
+          item.productId === product.productId && item.size === product.size,
       )
 
       if (productInCart) {
@@ -40,8 +43,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     })
   }
 
+  function removeToCart(id: string, size: number) {
+    const updatedProductsAfterRemove = cartItems.filter((item) => {
+      return item.productId !== id || item.size !== size
+    })
+    setCartItems(updatedProductsAfterRemove)
+  }
+
   return (
-    <CartContext.Provider value={{ items: cartItems, addToCart }}>
+    <CartContext.Provider value={{ items: cartItems, addToCart, removeToCart }}>
       {children}
     </CartContext.Provider>
   )

@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useSize } from '@/contexts/size-context'
 import { twMerge } from 'tailwind-merge'
 
 export function Sizes() {
   // const { addNewProduct } = useContext(CartContext)
-  const [selectedSize, setSelectedSize] = useState<number | null>(null)
+  const { getSelectedSize } = useSize()
   const sizes = [34, 35, 36, 37, 38, 39, 40, 41, 42, 43]
 
   // const handleNewProduct = () => {
@@ -30,7 +30,7 @@ export function Sizes() {
             value={size}
             className='peer hidden'
             onChange={() => {
-              setSelectedSize(size)
+              getSelectedSize(size)
             }}
           />
           <div
