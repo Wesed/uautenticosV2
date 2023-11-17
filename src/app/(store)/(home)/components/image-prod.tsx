@@ -5,11 +5,11 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 export function ImageProd({ srcProp }: ImageProps) {
-  const [src, setSrc] = useState(srcProp[0].url)
+  const [src, setSrc] = useState(srcProp[0])
 
   return (
     <Image
-      src={src}
+      src={src.toString()}
       alt=''
       width={520}
       height={480}
@@ -17,10 +17,10 @@ export function ImageProd({ srcProp }: ImageProps) {
       quality={100}
       priority
       onMouseOver={() => {
-        srcProp.length > 1 && setSrc(srcProp[1].url)
+        srcProp.length > 1 && setSrc(srcProp[1])
       }}
       onMouseOut={() => {
-        setSrc(srcProp[0].url)
+        setSrc(srcProp[0])
       }}
     />
   )

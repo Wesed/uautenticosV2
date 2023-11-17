@@ -2,7 +2,7 @@
 
 import { twMerge } from 'tailwind-merge'
 import { ShoppingBag, X } from 'lucide-react'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { useCart } from '@/contexts/cart-context'
 import { ProductContainer } from './product-container'
 import Link from 'next/link'
@@ -11,6 +11,15 @@ import { priceFormatter } from '@/utils/priceFormatter'
 export function Sidebar() {
   const { items } = useCart()
   const [open, setOpen] = useState(false)
+  const [getTotalCartValue, setTotalCartValue] = useState(0)
+
+  useEffect(() => {
+    let sum = 0
+    items.forEach((item) => {
+      sum += item.price * item.quantity
+    })
+    setTotalCartValue(sum)
+  }, [items])
 
   return (
     <div>
@@ -28,7 +37,7 @@ export function Sidebar() {
 
       <div
         className={twMerge(
-          'fixed right-0 top-0 flex-col justify-center',
+          'fixed right-0 top-0 z-10 flex-col justify-center',
           'min-h-screen w-[480px]',
           'rounded-md bg-gray800 px-12 shadow-3xl',
           `${open ? 'flex' : 'hidden'}`,
@@ -80,13 +89,13 @@ export function Sidebar() {
             <footer className='mb-12 mt-auto flex w-full flex-col gap-2'>
               <div className='flex justify-between'>
                 <span className='text-gray100'>Quantidade</span>
-                <span className='text-lg'>itens</span>
+                <span className=''>{items.length} itens</span>
               </div>
 
               <div className='flex justify-between'>
                 <span className='text-lg font-bold'>Valor total</span>
                 <span className='text-2xl font-bold'>
-                  {/* {priceFormatter(getTotalCartValue)} */}
+                  {priceFormatter(getTotalCartValue)}
                 </span>
               </div>
 
@@ -106,12 +115,12 @@ export function Sidebar() {
             </footer>
           </>
         ) : (
-          <div className='flex flex-col gap-4 self-center text-xl text-gray300'>
+          <div className='flex flex-col gap-4 self-center text-gray300'>
             O seu carrinho está vazio!
             <span className=''>
               <Link
                 href='/'
-                className='font-bold transition-colors hover:text-green500'
+                className='font-bold transition-colors hover:text-white'
                 onClick={() => {
                   setOpen(false)
                 }}

@@ -4,24 +4,11 @@ import { useSize } from '@/contexts/size-context'
 import { twMerge } from 'tailwind-merge'
 
 export function Sizes() {
-  // const { addNewProduct } = useContext(CartContext)
   const { getSelectedSize } = useSize()
   const sizes = [34, 35, 36, 37, 38, 39, 40, 41, 42, 43]
 
-  // const handleNewProduct = () => {
-  //   // verificar se selecionou um numero
-  //   const productData = {
-  //     id: product.id,
-  //     name: product.name,
-  //     imageUrl: product.images[0],
-  //     price: product.price,
-  //     size: selectedSize!,
-  //   }
-  //   addNewProduct(productData)
-  // }
-
   return (
-    <div className='mt-8 flex flex-wrap gap-3 text-gray300'>
+    <div className='flex flex-wrap gap-3 text-gray300'>
       {sizes.map((size) => (
         <label key={size}>
           <input
