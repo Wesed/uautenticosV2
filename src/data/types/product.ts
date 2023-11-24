@@ -14,3 +14,13 @@ export interface Product {
   sizes: string[]
   slug: string
 }
+
+export interface FilterProps {
+  params: {
+    size?: string
+    gender?: string
+    color?: string
+    price?: number
+    brand?: string
+  }
+}

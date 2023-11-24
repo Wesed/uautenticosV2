@@ -25,8 +25,6 @@ export async function GET(
 ) {
   const slug = z.string().parse(params.slug)
 
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-
   const res = await fetch(process.env.NEXT_PUBLIC_HYGRAPH_API!, {
     method: 'POST',
     headers: {

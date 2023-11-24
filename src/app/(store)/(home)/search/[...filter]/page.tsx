@@ -1,32 +1,37 @@
 import { api } from '@/data/api'
-import { Product } from '@/data/types/product'
+import { FilterProps, Product } from '@/data/types/product'
 import { priceFormatter } from '@/utils/priceFormatter'
-import { ShoppingBag } from 'lucide-react'
-import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { ImageProd } from './components/image-prod'
-import { SidebarFilter } from './components/sidebar-filter/sidebar-container'
+import { ImageProd } from '../../components/image-prod'
+import Link from 'next/link'
+import { ShoppingBag } from 'lucide-react'
 
-async function getProducts(): Promise<Product[]> {
-  const res = await api('/products', {
-    next: {
-      revalidate: 60 * 60 * 24, // 24 hours
-    },
+async function getProducts(filter: string) {
+  const res = await api(`/search/${JSON.stringify(filter)}`, {
+    cache: 'no-cache',
+    // next: {
+    //   revalidate: 60 * 60 * 24, // 24 hours
+    // },
   })
+
   const products = await res.json()
   return products
 }
 
-export default async function Home() {
-  const products = await getProducts()
+export default async function Search({
+  params,
+}: {
+  params: { filter: string }
+}) {
+  const products = await getProducts(params.filter)
 
   return (
     <div className='grid grid-cols-products gap-10'>
-      {products?.map((prod) => (
+      {products?.map((prod: Product) => (
         <Link
           key={prod.id}
-          href={`/products/${prod.slug}`}
           prefetch={false}
+          href={`/products/${prod.slug}`}
           className={twMerge(
             'h-[250px]',
             'group relative flex items-center justify-center',
