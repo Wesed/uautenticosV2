@@ -128,13 +128,17 @@ export function SidebarFilter() {
         filterString += `/color/${filter.color.toLowerCase()}`
       }
 
-      if (filter.priceRange > [40]) {
+      if (filter.priceRange.every((value) => value > 40)) {
+        console.log(filter.priceRange)
         filterString += `/price/${filter.priceRange}`
       }
 
       if (filter.brand) {
         filterString += `/brand/${filter.brand}`
       }
+
+      console.log(filterString)
+
       router.push(`/search${filterString}`)
     }
 

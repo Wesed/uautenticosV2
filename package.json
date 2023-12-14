@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "lint": "next lint"
   },
   "dependencies": {
     "@graphql-eslint/eslint-plugin": "^3.20.1",
@@ -15,9 +14,6 @@
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-slider": "^1.1.2",
-    "apollo-client": "^2.6.10",
-    "apollo-server": "^3.12.1",
-    "graphql": "^16.8.1",
     "lucide-react": "^0.292.0",
     "next": "14.0.2",
     "react": "^18",
@@ -26,16 +22,9 @@
     "reflect-metadata": "^0.1.13",
     "tailwind-variants": "^0.1.18",
     "type-graphql": "^1.1.1",
-    "urql": "^4.0.5",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@graphql-codegen/add": "^5.0.0",
-    "@graphql-codegen/cli": "5.0.0",
-    "@graphql-codegen/client-preset": "4.1.0",
-    "@graphql-codegen/typescript": "4.0.1",
-    "@graphql-codegen/typescript-operations": "4.0.1",
-    "@graphql-codegen/typescript-urql": "^4.0.0",
     "@rocketseat/eslint-config": "^2.1.0",
     "@types/node": "^20",
     "@types/react": "^18",

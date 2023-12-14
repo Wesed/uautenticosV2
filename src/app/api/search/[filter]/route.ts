@@ -1,15 +1,5 @@
 import { Product } from '@/data/types/product'
 
-interface filterProps {
-  params: {
-    size: string
-    gender: string
-    color: string
-    price: number
-    brand: string
-  }
-}
-
 interface FilterProps {
   size?: number[]
   gender?: string[]
@@ -22,7 +12,7 @@ type FilterTypes = {
   size: 'Int'
   gender: 'String'
   color: 'String'
-  price: 'Int'
+  price: 'Float'
   brand: 'String'
   [key: string | number]: string
 }
@@ -47,7 +37,7 @@ const types: FilterTypes = {
   size: 'Int',
   gender: 'String',
   color: 'String',
-  price: 'Int',
+  price: 'Float',
   brand: 'String',
 }
 
@@ -139,7 +129,7 @@ export async function GET(_: Request, { params }) {
 
   const { data } = await res.json()
 
-  console.log(data)
+  console.log('aq', data)
 
   if (!data) {
     return Response.json(
