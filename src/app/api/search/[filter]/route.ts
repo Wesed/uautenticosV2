@@ -22,7 +22,7 @@ const conditions: { [key: string]: string } = {
   gender: '_contains_some',
   color: '_contains',
   price: '_gte',
-  brand: '_contains',
+  brand: '_in',
 }
 
 const isArray: { [key: string]: boolean } = {
@@ -71,6 +71,10 @@ export async function GET(_: Request, { params }) {
     }
   }
 
+  const keys = Object.entries(filterObj).map(([key, value]) => key)
+
+  const values = Object.entries(filterObj).map(([key, value]) => value)
+
   const variablesQuery = Object.keys(filterObj)
     .map((key) => {
       const type = isArray[key] ? `[${types[key]}!]` : `${types[key]}!`
@@ -80,17 +84,15 @@ export async function GET(_: Request, { params }) {
 
   const whereQuery = Object.keys(filterObj)
     .map((key) => {
-      return `${key}${conditions[key]}: $${key}`
+      if (key === 'brand') {
+        return `${key}${conditions[key]}: [$${key}]`
+      } else {
+        return `${key}${conditions[key]}: $${key}`
+      }
     })
     .join(',')
 
-  const keys = Object.entries(filterObj).map(([key, value]) => key)
-
-  const values = Object.entries(filterObj).map(([key, value]) => value)
-
-  console.log('aq', values)
-
-  const variables = keys.reduce((obj: Record<string, ''>, key, index) => {
+  const variables = keys.reduce((obj: Record<string, string>, key, index) => {
     obj[key] = values[index]
     return obj
   }, {})
@@ -111,7 +113,7 @@ export async function GET(_: Request, { params }) {
         }
       }
 `
-  console.log(variables)
+  console.log('a', variables)
   console.log(query)
 
   const res = await fetch(process.env.NEXT_PUBLIC_HYGRAPH_API!, {
