@@ -2,7 +2,7 @@ import { api } from '@/data/api'
 import { Product } from '@/data/types/product'
 import { priceFormatter } from '@/utils/priceFormatter'
 import { twMerge } from 'tailwind-merge'
-import { ImageProd } from '../../components/image-prod'
+import { ImageProd } from '../components/image-prod'
 import Link from 'next/link'
 import { ShoppingBag } from 'lucide-react'
 

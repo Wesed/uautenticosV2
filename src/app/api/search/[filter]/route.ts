@@ -80,7 +80,7 @@ export async function GET(_: Request, { params }) {
       const type = isArray[key] ? `[${types[key]}!]` : `${types[key]}!`
       return `$${key}: ${type}`
     })
-    .join(',')
+    .join(', ')
 
   const whereQuery = Object.keys(filterObj)
     .map((key) => {
@@ -90,10 +90,15 @@ export async function GET(_: Request, { params }) {
         return `${key}${conditions[key]}: $${key}`
       }
     })
-    .join(',')
+    .join(', ')
 
-  const variables = keys.reduce((obj: Record<string, string>, key, index) => {
-    obj[key] = values[index]
+  const variables = keys.reduce((obj: Record<string, string[]>, key, index) => {
+    if (key === 'gender') {
+      obj[key] = String(values[index]).split(',')
+    } else {
+      obj[key] = values[index]
+    }
+
     return obj
   }, {})
 
@@ -113,9 +118,6 @@ export async function GET(_: Request, { params }) {
         }
       }
 `
-  console.log('a', variables)
-  console.log(query)
-
   const res = await fetch(process.env.NEXT_PUBLIC_HYGRAPH_API!, {
     method: 'POST',
     headers: {
@@ -130,8 +132,6 @@ export async function GET(_: Request, { params }) {
   })
 
   const { data } = await res.json()
-
-  console.log('aq', data)
 
   if (!data) {
     return Response.json(

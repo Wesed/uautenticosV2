@@ -7,16 +7,12 @@ import * as Slider from '@radix-ui/react-slider'
 import { SidebarItem } from './sidebar-item'
 import { twMerge } from 'tailwind-merge'
 import { Check, Search, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 interface FilterProps {
   size: number | null
-  gender: {
-    f: boolean
-    m: boolean
-    u: boolean
-  }
+  gender: string[] | null
   color: string | null
   priceRange: number[]
   brand: string[] | null
@@ -25,13 +21,10 @@ interface FilterProps {
 
 export function SidebarFilter() {
   const router = useRouter()
+
   const [filter, setFilter] = useState<FilterProps>({
     size: null,
-    gender: {
-      f: false,
-      m: false,
-      u: false,
-    },
+    gender: null,
     color: null,
     priceRange: [40],
     brand: null,
@@ -68,6 +61,21 @@ export function SidebarFilter() {
     {
       name: 'Rainbow',
       color: 'bg-rainbow',
+    },
+  ]
+
+  const genders = [
+    {
+      name: 'Feminino',
+      id: 'f',
+    },
+    {
+      name: 'Masculino',
+      id: 'm',
+    },
+    {
+      name: 'Unissex',
+      id: 'u',
     },
   ]
 
@@ -109,18 +117,13 @@ export function SidebarFilter() {
   useEffect(() => {
     function generateFilterString() {
       let filterString = ''
-      console.log('antes', filterString)
 
       if (filter.size) {
         filterString += `/size/${filter.size}`
       }
 
-      if (filter.gender.f || filter.gender.m || filter.gender.u) {
-        const keys = Object.keys(
-          filter.gender,
-        ) as (keyof typeof filter.gender)[]
-        const key = keys.find((key) => filter.gender[key])
-        filterString += `/gender/${key}`
+      if (filter.gender) {
+        filterString += `/gender/${filter.gender}`
       }
 
       if (filter.color) {
@@ -135,8 +138,6 @@ export function SidebarFilter() {
       if (filter.brand) {
         filterString += `/brand/${filter.brand}`
       }
-
-      console.log('string', filterString)
 
       router.push(`/search${filterString}`)
     }
@@ -160,15 +161,19 @@ export function SidebarFilter() {
 
       case 'gender':
         if (Array.isArray(filterValue)) {
-          const genderKey = filterValue[0]
+          const genderKey = filterValue[0].toLocaleLowerCase()
           const genderValue = !!(filterValue[1] === true)
+          let newGender: string[] = filter.gender ?? []
+
+          if (genderValue) {
+            newGender.push(genderKey)
+          } else {
+            newGender = newGender.filter((item) => item !== genderKey)
+          }
 
           setFilter((state) => ({
             ...state,
-            gender: {
-              ...state.gender,
-              [genderKey]: genderValue,
-            },
+            gender: newGender,
           }))
         }
         break
@@ -211,11 +216,7 @@ export function SidebarFilter() {
       setFilter((state) => ({
         ...state,
         size: null,
-        gender: {
-          f: false,
-          m: false,
-          u: false,
-        },
+        gender: null,
         color: null,
         priceRange: [40],
         brand: null,
@@ -230,16 +231,32 @@ export function SidebarFilter() {
     }
   }
 
+  function handleSearch(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData)
+
+    const query = data.query
+
+    if (!query) {
+      return null
+    }
+
+    router.push(`/search?q=${query}`)
+  }
+
   return (
     <div className='flex flex-col gap-5'>
-      <div className='relative'>
+      <form onSubmit={handleSearch} className='relative'>
         <Search className='absolute right-2 top-2 h-5 w-5 text-gray-400' />
         <input
+          name='query'
           type='text'
           className='w-full rounded-md bg-gray800 p-2 pl-3 pr-8 outline-0 placeholder:text-gray400'
           placeholder='Pesquisar por...'
         />
-      </div>
+      </form>
 
       <div className='flex flex-col gap-2'>
         <div className='flex items-center justify-between'>
@@ -289,55 +306,28 @@ export function SidebarFilter() {
           </SidebarItem>
 
           <SidebarItem filter='Gênero' value='gender'>
-            <div className='flex items-center gap-2'>
-              <Checkbox.Root
-                id='f'
-                className='flex h-4 w-4 items-center justify-center rounded-sm bg-gray400 shadow-sm shadow-black data-[state=checked]:bg-gray100'
-                onCheckedChange={(check) =>
-                  updateFilters('gender', ['f', check])
-                }
-              >
-                <Checkbox.Indicator>
-                  <Check className='h-3 w-3 text-gray800' />
-                </Checkbox.Indicator>
-              </Checkbox.Root>
-              <label htmlFor='f' className='cursor-pointer hover:text-gray100'>
-                Feminino
-              </label>
-            </div>
-
-            <div className='flex items-center gap-2'>
-              <Checkbox.Root
-                id='m'
-                className='flex h-4 w-4 items-center justify-center rounded-sm bg-gray400 shadow-sm shadow-black data-[state=checked]:bg-gray100'
-                onCheckedChange={(check) =>
-                  updateFilters('gender', ['m', check])
-                }
-              >
-                <Checkbox.Indicator>
-                  <Check className='h-3 w-3 text-gray800' />
-                </Checkbox.Indicator>
-              </Checkbox.Root>
-              <label htmlFor='m' className='cursor-pointer hover:text-gray100'>
-                Masculino
-              </label>
-            </div>
-
-            <div className='flex items-center gap-2'>
-              <Checkbox.Root
-                id='u'
-                className='flex h-4 w-4 items-center justify-center rounded-sm bg-gray400 shadow-sm shadow-black data-[state=checked]:bg-gray100'
-                onCheckedChange={(check) =>
-                  updateFilters('gender', ['u', check])
-                }
-              >
-                <Checkbox.Indicator>
-                  <Check className='h-3 w-3 text-gray800' />
-                </Checkbox.Indicator>
-              </Checkbox.Root>
-              <label htmlFor='u' className='cursor-pointer hover:text-gray100'>
-                Unissex
-              </label>
+            <div className='flex flex-col  gap-2'>
+              {genders.map((gender) => (
+                <div key={gender.id} className='flex items-center gap-2'>
+                  <Checkbox.Root
+                    id={gender.id}
+                    className='flex h-4 w-4 items-center justify-center rounded-sm bg-gray400 shadow-sm shadow-black data-[state=checked]:bg-gray100'
+                    onCheckedChange={(check) =>
+                      updateFilters('gender', [gender.name, check])
+                    }
+                  >
+                    <Checkbox.Indicator>
+                      <Check className='h-3 w-3 text-gray800' />
+                    </Checkbox.Indicator>
+                  </Checkbox.Root>
+                  <label
+                    htmlFor={gender.id}
+                    className='cursor-pointer hover:text-gray100'
+                  >
+                    {gender.name}
+                  </label>
+                </div>
+              ))}
             </div>
           </SidebarItem>
 
