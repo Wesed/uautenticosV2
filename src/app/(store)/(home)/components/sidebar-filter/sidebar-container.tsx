@@ -6,7 +6,7 @@ import * as Slider from '@radix-ui/react-slider'
 
 import { SidebarItem } from './sidebar-item'
 import { twMerge } from 'tailwind-merge'
-import { Check, Search } from 'lucide-react'
+import { Check, Search, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -21,7 +21,6 @@ interface FilterProps {
   priceRange: number[]
   brand: string[] | null
   isEmpty: boolean
-  filterString: string
 }
 
 export function SidebarFilter() {
@@ -37,7 +36,6 @@ export function SidebarFilter() {
     priceRange: [40],
     brand: null,
     isEmpty: true,
-    filterString: '',
   })
 
   const sizes = [34, 35, 36, 37, 38, 39, 40, 41, 42, 43]
@@ -109,8 +107,9 @@ export function SidebarFilter() {
   ]
 
   useEffect(() => {
-    function generateFilterString(filter: FilterProps) {
-      let filterString = filter.filterString
+    function generateFilterString() {
+      let filterString = ''
+      console.log('antes', filterString)
 
       if (filter.size) {
         filterString += `/size/${filter.size}`
@@ -137,19 +136,19 @@ export function SidebarFilter() {
         filterString += `/brand/${filter.brand}`
       }
 
-      console.log(filterString)
+      console.log('string', filterString)
 
       router.push(`/search${filterString}`)
     }
 
     if (!filter.isEmpty) {
-      generateFilterString(filter)
+      generateFilterString()
     }
   }, [filter, router])
 
   function updateFilters(
     filterType: string,
-    filterValue: [string, boolean | 'indeterminate'] | string | number,
+    filterValue?: [string, boolean | 'indeterminate'] | string | number,
   ) {
     switch (filterType) {
       case 'size':
@@ -208,10 +207,27 @@ export function SidebarFilter() {
         break
     }
 
-    setFilter((state) => ({
-      ...state,
-      isEmpty: false,
-    }))
+    if (filterType === 'clearFilter') {
+      setFilter((state) => ({
+        ...state,
+        size: null,
+        gender: {
+          f: false,
+          m: false,
+          u: false,
+        },
+        color: null,
+        priceRange: [40],
+        brand: null,
+        isEmpty: true,
+      }))
+      router.push('/')
+    } else {
+      setFilter((state) => ({
+        ...state,
+        isEmpty: false,
+      }))
+    }
   }
 
   return (
@@ -226,7 +242,18 @@ export function SidebarFilter() {
       </div>
 
       <div className='flex flex-col gap-2'>
-        <span className='px-1 text-gray300'>Filtrar por</span>
+        <div className='flex items-center justify-between'>
+          <span className='px-1 text-gray300'>Filtrar por</span>
+          <button
+            onClick={() => {
+              updateFilters('clearFilter')
+            }}
+            className='flex items-center text-sm text-gray-400 transition-colors duration-300 hover:text-gray-100'
+          >
+            <X className='h-4 w-4' />
+            Limpar filtros
+          </button>
+        </div>
         <Accordion.Root
           type='single'
           collapsible
