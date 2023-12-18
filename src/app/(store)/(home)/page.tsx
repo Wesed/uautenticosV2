@@ -5,7 +5,6 @@ import { ShoppingBag } from 'lucide-react'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { ImageProd } from './components/image-prod'
-import { SidebarFilter } from './components/sidebar-filter/sidebar-container'
 
 async function getProducts(): Promise<Product[]> {
   const res = await api('/products', {

@@ -42,8 +42,6 @@ export async function GET(
 
   const { data } = await res.json()
 
-  const { product } = data
-
   if (!data) {
     return Response.json({ message: 'Produto nao encontrado' }, { status: 400 })
   }

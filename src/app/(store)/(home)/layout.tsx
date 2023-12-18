@@ -10,7 +10,7 @@ export default function StoreLayout({
 }) {
   return (
     <CartProvider>
-      <div className='grid grid-cols-sidebarFilter gap-10'>
+      <div className='items-start grid grid-cols-sidebarFilter gap-10'>
         <SidebarFilter />
         {children}
       </div>

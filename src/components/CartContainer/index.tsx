@@ -2,13 +2,13 @@
 
 import { twMerge } from 'tailwind-merge'
 import { ShoppingBag, X } from 'lucide-react'
-import { ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCart } from '@/contexts/cart-context'
 import { ProductContainer } from './product-container'
 import Link from 'next/link'
 import { priceFormatter } from '@/utils/priceFormatter'
 
-export function Sidebar() {
+export function CartContainer() {
   const { items } = useCart()
   const [open, setOpen] = useState(false)
   const [getTotalCartValue, setTotalCartValue] = useState(0)
@@ -22,12 +22,12 @@ export function Sidebar() {
   }, [items])
 
   return (
-    <div>
+    <div className='ml-auto'>
       <button
         onClick={() => {
           setOpen(!open)
         }}
-        className='bg-transparent relative flex'
+        className='relative flex bg-transparent'
       >
         <ShoppingBag className='h-8 w-8 cursor-pointer text-white hover:text-gray100' />
         <span className='absolute -right-2 -top-1 h-5 w-5 rounded-full bg-green500 text-center text-sm font-bold text-gray100'>
