@@ -61,24 +61,6 @@ dependencies:
     version: 3.22.4
 
 devDependencies:
-  '@graphql-codegen/add':
-    specifier: ^5.0.0
-    version: 5.0.0(graphql@16.8.1)
-  '@graphql-codegen/cli':
-    specifier: 5.0.0
-    version: 5.0.0(@types/node@20.9.0)(graphql@16.8.1)(typescript@5.2.2)
-  '@graphql-codegen/client-preset':
-    specifier: 4.1.0
-    version: 4.1.0(graphql@16.8.1)
-  '@graphql-codegen/typescript':
-    specifier: 4.0.1
-    version: 4.0.1(graphql@16.8.1)
-  '@graphql-codegen/typescript-operations':
-    specifier: 4.0.1
-    version: 4.0.1(graphql@16.8.1)
-  '@graphql-codegen/typescript-urql':
-    specifier: ^4.0.0
-    version: 4.0.0(graphql-tag@2.12.6)(graphql@16.8.1)
   '@rocketseat/eslint-config':
     specifier: ^2.1.0
     version: 2.1.0(eslint@8.53.0)(typescript@5.2.2)

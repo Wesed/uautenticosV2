@@ -32,8 +32,6 @@ export default async function SearchPage({ searchParams }: SearchProps) {
     redirect('/')
   }
 
-  console.log(products)
-
   return (
     <div className='flex h-full flex-col gap-5'>
       <span>

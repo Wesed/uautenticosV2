@@ -31,12 +31,12 @@ export function SearchBar() {
         name='query'
         defaultValue={query ?? ''}
         type='text'
-        className='w-full rounded-lg bg-gray800 p-3 pl-10 pr-20 outline-0 placeholder:text-gray-400'
+        className='w-full rounded-full bg-gray800 p-3 pl-12 pr-20 outline-0 placeholder:text-gray-400'
         placeholder='Pesquisar por...'
       />
       <button
         type='submit'
-        className='absolute left-2 top-[13px] h-5 w-5 text-gray-600'
+        className='absolute left-4 top-[13px] h-5 w-5 text-gray-600'
       >
         <Search className='h-full w-full' />
       </button>

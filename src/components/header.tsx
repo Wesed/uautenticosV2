@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { CartContainer } from './CartContainer'
 import { SearchBar } from './searchBar'
+import { Suspense } from 'react'
 
 export function Header() {
   return (
@@ -10,7 +11,9 @@ export function Header() {
       <Link href='/' className=''>
         <Image src={logo} alt='' priority className='brightness-80 filter' />
       </Link>
-      <SearchBar />
+      <Suspense fallback={null}>
+        <SearchBar />
+      </Suspense>
       <CartContainer />
     </div>
   )
