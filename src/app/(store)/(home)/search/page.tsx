@@ -28,9 +28,9 @@ export default async function SearchPage({ searchParams }: SearchProps) {
   const products = await searchProducts(query)
 
   // se acessar a pagina sem busca, retorna ao inicio
-  if (!query) {
-    redirect('/')
-  }
+  // if (!query) {
+  //   redirect('/')
+  // }
 
   return (
     <div className='flex h-full flex-col gap-5'>

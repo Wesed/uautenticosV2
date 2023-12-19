@@ -8,7 +8,7 @@ import { SidebarItem } from './sidebar-item'
 import { twMerge } from 'tailwind-merge'
 import { Check, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface FilterProps {
   size: number | null
@@ -17,10 +17,20 @@ interface FilterProps {
   priceRange: number[]
   brand: string[] | null
   isEmpty: boolean
+  [key: string]: any
 }
+
+type FilterType =
+  | 'size'
+  | 'gender'
+  | 'color'
+  | 'price'
+  | 'brand'
+  | 'clearFilter'
 
 export function SidebarFilter() {
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const [filter, setFilter] = useState<FilterProps>({
     size: null,
@@ -116,39 +126,38 @@ export function SidebarFilter() {
 
   useEffect(() => {
     function generateFilterString() {
-      let filterString = ''
+      const filters = ['size', 'gender', 'color', 'brand']
+      const hasSearchParam = searchParams.get('q')
+      let filterString = hasSearchParam
+        ? `/search?q=${hasSearchParam}`
+        : '/search'
 
-      if (filter.size) {
-        filterString += `/size/${filter.size}`
-      }
-
-      if (filter.gender) {
-        filterString += `/gender/${filter.gender}`
-      }
-
-      if (filter.color) {
-        filterString += `/color/${filter.color.toLowerCase()}`
-      }
+      filters.forEach((filterKey) => {
+        if (filter[filterKey]) {
+          filterString += filterString.includes('?')
+            ? `&${filterKey}=${filter[filterKey]}`
+            : `?${filterKey}=${filter[filterKey]}`
+        }
+      })
 
       if (filter.priceRange.every((value) => value > 40)) {
-        console.log(filter.priceRange)
-        filterString += `/price/${filter.priceRange}`
+        filterString += filterString.includes('?')
+          ? `&priceRange=${filter.priceRange}`
+          : `?priceRange=${filter.priceRange}`
       }
 
-      if (filter.brand) {
-        filterString += `/brand/${filter.brand}`
+      if (!filterString.endsWith('/search')) {
+        router.push(filterString)
       }
-
-      router.push(`/search${filterString}`)
     }
 
     if (!filter.isEmpty) {
       generateFilterString()
     }
-  }, [filter, router])
+  }, [filter, searchParams, router])
 
   function updateFilters(
-    filterType: string,
+    filterType: FilterType,
     filterValue?: [string, boolean | 'indeterminate'] | string | number,
   ) {
     switch (filterType) {
