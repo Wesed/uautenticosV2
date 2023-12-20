@@ -2,29 +2,138 @@ import { z } from 'zod'
 import type { NextRequest } from 'next/server'
 import { Product } from '@/data/types/product'
 
-const query = `
-query Products($q: String!) {
-  products (
-    where: {
-      _search: $q
-    }
-  ) {
-      id
-      slug
-      name
-      price
-      size
-     images {
-      url
-     }
-    }
-  }
-`
+interface FilterProps {
+  q?: string
+  size?: number[]
+  gender?: string[]
+  color?: string
+  price?: number
+  brand?: string[]
+}
+
+const conditions: { [key: string]: string } = {
+  size: '_contains_some',
+  gender: '_contains_some',
+  color: '_contains',
+  price: '_gte',
+  brand: '_in',
+  q: '_search',
+}
+
+const isArray: { [key: string]: boolean } = {
+  q: false,
+  size: true,
+  gender: true,
+  color: false,
+  price: false,
+  brand: true,
+}
+
+type FilterTypes = {
+  size: 'Int'
+  gender: 'String'
+  color: 'String'
+  price: 'Float'
+  brand: 'String'
+  [key: string | number]: string
+}
+
+const types: FilterTypes = {
+  q: 'String',
+  size: 'Int',
+  gender: 'String',
+  color: 'String',
+  price: 'Float',
+  brand: 'String',
+}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
 
-  const q = z.string().parse(searchParams.get('q'))
+  console.log('aq', searchParams)
+
+  const filterObj: FilterProps = {
+    size: searchParams.has('size') ? [] : undefined,
+    gender: searchParams.has('gender') ? [] : undefined,
+    brand: searchParams.has('brand') ? [] : undefined,
+  }
+
+  for (const [key, value] of searchParams.entries()) {
+    switch (key) {
+      case 'q':
+        filterObj.q = value
+        break
+      case 'size':
+        filterObj.size?.push(Number(value))
+        break
+      case 'gender':
+        filterObj.gender?.push(value)
+        break
+      case 'color':
+        filterObj.color = value
+        break
+      case 'priceRange':
+        filterObj.price = Number(value)
+        break
+      case 'brand':
+        filterObj.brand?.push(value)
+        break
+    }
+  }
+
+  console.log('filter', filterObj)
+
+  const keys = Object.entries(filterObj).map(([key, value]) => key)
+
+  const values = Object.entries(filterObj).map(([key, value]) => value)
+
+  const variablesQuery = Object.keys(filterObj)
+    .filter((key) => filterObj[key as keyof FilterProps] !== undefined)
+    .map((key) => {
+      const type = isArray[key] ? `[${types[key]}!]` : `${types[key]}!`
+      return `$${key}: ${type}`
+    })
+    .join(', ')
+
+  const whereQuery = Object.keys(filterObj)
+    .filter((key) => filterObj[key as keyof FilterProps] !== undefined)
+    .map((key) => {
+      if (key === 'q') {
+        return `${conditions[key]}: $${key}`
+      } else {
+        return `${key}${conditions[key]}: $${key}`
+      }
+    })
+    .join(', ')
+
+  const variables = keys.reduce((obj: Record<string, string[]>, key, index) => {
+    if (key === 'gender') {
+      obj[key] = String(values[index]).split(',')
+    } else {
+      obj[key] = values[index]
+    }
+
+    return obj
+  }, {})
+
+  const query = `
+    query Product(${variablesQuery}) {
+      products (
+          where: {${whereQuery}}
+        ) {
+            id
+            slug
+            name
+            price
+            size
+          images {
+            url
+          }
+          }
+        }
+  `
+
+  console.log('variables:', variables, query)
 
   const res = await fetch(process.env.NEXT_PUBLIC_HYGRAPH_API!, {
     method: 'POST',
@@ -35,9 +144,7 @@ export async function GET(request: NextRequest) {
     },
     body: JSON.stringify({
       query,
-      variables: {
-        q,
-      },
+      variables,
     }),
   })
 
@@ -56,5 +163,6 @@ export async function GET(request: NextRequest) {
       images: prod.images.map((image) => image.url),
     }
   })
+
   return Response.json(products)
 }

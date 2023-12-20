@@ -8,9 +8,10 @@ import { ShoppingBag } from 'lucide-react'
 
 async function getProducts(filter: string) {
   const res = await api(`/search/${JSON.stringify(filter)}`, {
-    next: {
-      revalidate: 60 * 60 * 24, // 24 hours
-    },
+    cache: 'no-cache',
+    // next: {
+    //   revalidate: 60 * 60 * 24, // 24 hours
+    // },
   })
 
   const products = await res.json()

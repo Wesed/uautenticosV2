@@ -248,7 +248,10 @@ export function SidebarFilter() {
           onClick={() => {
             updateFilters('clearFilter')
           }}
-          className='flex items-center text-sm text-gray-400 transition-colors duration-300 hover:text-gray-100'
+          className={twMerge(
+            'items-center text-sm text-gray-400 transition-colors duration-300 hover:text-gray-100',
+            `${filter.isEmpty ? 'hidden ' : 'flex'}`,
+          )}
         >
           <X className='h-4 w-4' />
           Limpar filtros

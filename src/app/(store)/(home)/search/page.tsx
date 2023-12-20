@@ -9,23 +9,30 @@ import { redirect } from 'next/navigation'
 
 interface SearchProps {
   searchParams: {
-    q: string
+    q?: string | undefined
+    size?: number | undefined
+    gender?: string | undefined
+    colors?: string | undefined
+    price?: number | undefined
+    brand?: string | undefined
   }
 }
 
-async function searchProducts(query: string): Promise<Product[]> {
-  const res = await api(`/search?q=${query}`, {
-    next: {
-      revalidate: 60 * 60 * 24, // 24 hours
-    },
+async function searchProducts(params: string): Promise<Product[]> {
+  const res = await api(`/search?${params}`, {
+    cache: 'no-cache',
+    // next: {
+    //   revalidate: 60 * 60 * 24, // 24 hours
+    // },
   })
   const products = await res.json()
   return products
 }
 
 export default async function SearchPage({ searchParams }: SearchProps) {
+  const params = new URLSearchParams(searchParams as string).toString()
   const { q: query } = searchParams
-  const products = await searchProducts(query)
+  const products = await searchProducts(params)
 
   // se acessar a pagina sem busca, retorna ao inicio
   // if (!query) {
