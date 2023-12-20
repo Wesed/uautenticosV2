@@ -15,8 +15,6 @@ export function SizeProvider({ children }: { children: ReactNode }) {
     setSelectedSize(size)
   }
 
-  console.log(selectedSize)
-
   return (
     <SizeContext.Provider value={{ selectedSize, getSelectedSize }}>
       {children}

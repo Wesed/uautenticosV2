@@ -1,5 +1,6 @@
 'use client'
 import { ImageProps } from '@/data/types/product'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Zoom from 'react-medium-image-zoom'
 import { twMerge } from 'tailwind-merge'
@@ -13,8 +14,12 @@ export function Images({ srcProp }: ImageProps) {
       )}
     >
       {srcProp.map((img, i) => (
-        <div
+        <motion.div
           key={i}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          exit={{ scale: 0 }}
+          transition={{ delay: i / 15 }}
           className={twMerge(
             'h-[350px] w-[350px]',
             'items-center justify-center p-1',
@@ -33,7 +38,7 @@ export function Images({ srcProp }: ImageProps) {
               priority
             />
           </Zoom>
-        </div>
+        </motion.div>
       ))}
     </div>
   )

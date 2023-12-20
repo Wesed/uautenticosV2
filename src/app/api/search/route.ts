@@ -50,8 +50,6 @@ const types: FilterTypes = {
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
 
-  console.log('aq', searchParams)
-
   const filterObj: FilterProps = {
     size: searchParams.has('size') ? [] : undefined,
     gender: searchParams.has('gender') ? [] : undefined,
@@ -80,8 +78,6 @@ export async function GET(request: NextRequest) {
         break
     }
   }
-
-  console.log('filter', filterObj)
 
   const keys = Object.entries(filterObj).map(([key, value]) => key)
 
@@ -132,8 +128,6 @@ export async function GET(request: NextRequest) {
           }
         }
   `
-
-  console.log('variables:', variables, query)
 
   const res = await fetch(process.env.NEXT_PUBLIC_HYGRAPH_API!, {
     method: 'POST',

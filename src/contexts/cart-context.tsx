@@ -25,15 +25,22 @@ interface CartContextType {
 const CartContext = createContext({} as CartContextType)
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    const cartItemsAsJSON = localStorage.getItem('@uautenticos:cart-items')
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
 
-    if (cartItemsAsJSON) {
-      return JSON.parse(cartItemsAsJSON)
+  // seta os dados do localStorage no cartItems
+  useEffect(() => {
+    const getCartItemsFromStorage = () => {
+      const cartItemsAsJSON = localStorage.getItem('@uautenticos:cart-items')
+
+      if (cartItemsAsJSON) {
+        return JSON.parse(cartItemsAsJSON)
+      }
+
+      return []
     }
 
-    return []
-  })
+    setCartItems(getCartItemsFromStorage())
+  }, [])
 
   // mantem o localStorage atualizado com os itens do carrinho
   useEffect(() => {

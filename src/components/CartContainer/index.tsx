@@ -50,7 +50,7 @@ export function CartContainer() {
       >
         <ShoppingBag className='h-8 w-8 cursor-pointer text-white hover:text-gray100' />
         <span className='absolute -right-2 -top-1 h-5 w-5 rounded-full bg-green500 text-center text-sm font-bold text-gray100'>
-          {items.length}
+          {items?.length}
         </span>
       </button>
 
@@ -76,7 +76,7 @@ export function CartContainer() {
               <X className='h-6 w-6' />
             </button>
 
-            {items.length > 0 ? (
+            {items?.length > 0 ? (
               <>
                 <h2 className='mb-8 mt-[72px] text-xl font-bold text-gray100'>
                   Sacola de compras
