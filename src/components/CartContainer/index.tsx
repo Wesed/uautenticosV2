@@ -2,7 +2,7 @@
 
 import { twMerge } from 'tailwind-merge'
 import { ShoppingBag, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useCart } from '@/contexts/cart-context'
 import { ProductContainer } from './product-container'
 import Link from 'next/link'
@@ -12,6 +12,24 @@ export function CartContainer() {
   const { items } = useCart()
   const [open, setOpen] = useState(false)
   const [getTotalCartValue, setTotalCartValue] = useState(0)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+
+  // close cart container
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Element
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node) &&
+        !target.closest('[data-target=".sidebar"]')
+      ) {
+        setOpen(false)
+      }
+    }
+
+    // fica ouvindo os eventos em document
+    document.addEventListener('click', handleClickOutside)
+  }, [])
 
   useEffect(() => {
     let sum = 0
@@ -22,7 +40,7 @@ export function CartContainer() {
   }, [items])
 
   return (
-    <div className='ml-auto'>
+    <div ref={containerRef} className='ml-auto'>
       <button
         onClick={() => {
           setOpen(!open)
@@ -51,8 +69,6 @@ export function CartContainer() {
         >
           <X className='h-6 w-6' />
         </button>
-
-        {/* body */}
 
         {items.length > 0 ? (
           <>

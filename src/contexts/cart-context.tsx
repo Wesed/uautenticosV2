@@ -1,5 +1,11 @@
 'use client'
-import { ReactNode, createContext, useContext, useState } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
 interface CartItem {
   productId: string
@@ -19,7 +25,21 @@ interface CartContextType {
 const CartContext = createContext({} as CartContextType)
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const cartItemsAsJSON = localStorage.getItem('@uautenticos:cart-items')
+
+    if (cartItemsAsJSON) {
+      return JSON.parse(cartItemsAsJSON)
+    }
+
+    return []
+  })
+
+  // mantem o localStorage atualizado com os itens do carrinho
+  useEffect(() => {
+    const cartItemsJSON = JSON.stringify(cartItems)
+    localStorage.setItem('@uautenticos:cart-items', cartItemsJSON)
+  }, [cartItems])
 
   function addToCart(product: CartItem) {
     setCartItems((state) => {
