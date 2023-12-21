@@ -8,12 +8,14 @@ import { ProductContainer } from './product-container'
 import Link from 'next/link'
 import { priceFormatter } from '@/utils/priceFormatter'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 export function CartContainer() {
   const { items } = useCart()
   const [open, setOpen] = useState(false)
   const [getTotalCartValue, setTotalCartValue] = useState(0)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const [parent] = useAutoAnimate()
 
   // close cart container
   useEffect(() => {
@@ -82,7 +84,7 @@ export function CartContainer() {
                   Sacola de compras
                 </h2>
 
-                <div className='flex flex-col gap-6'>
+                <div ref={parent} className='flex flex-col gap-6'>
                   {items.map((prod) => (
                     <ProductContainer
                       key={prod.productId}

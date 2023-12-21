@@ -257,7 +257,7 @@ export function SidebarFilter() {
           Limpar filtros
         </button>
       </div>
-      <Accordion.Root type='single' collapsible className='flex flex-col gap-3'>
+      <Accordion.Root type='multiple' className='flex flex-col gap-3'>
         <SidebarItem filter='Tamanho' value='size'>
           <div className='flex flex-wrap gap-2 text-gray300'>
             {sizes.map((size) => (
@@ -286,7 +286,6 @@ export function SidebarFilter() {
             ))}
           </div>
         </SidebarItem>
-
         <SidebarItem filter='Gênero' value='gender'>
           <div className='flex flex-col  gap-2'>
             {genders.map((gender) => (
@@ -318,7 +317,7 @@ export function SidebarFilter() {
             {colors.map((color) => (
               <label
                 key={color.name}
-                className='flex w-16 cursor-pointer flex-col items-center justify-center gap-1 hover:scale-110'
+                className='relative flex w-16 cursor-pointer flex-col items-center justify-center gap-1 hover:scale-110'
               >
                 <input
                   type='radio'
@@ -331,6 +330,14 @@ export function SidebarFilter() {
                 />
                 <span className={`${color.color} h-5 w-5 rounded-full`} />
                 <span className='text-sm'>{color.name}</span>
+                <span className='absolute -top-1 left-6 flex opacity-0 peer-checked:opacity-100'>
+                  <Check className='w-5' strokeWidth={4} color='black' />
+                  <Check
+                    className=' absolute w-5 '
+                    strokeWidth={2}
+                    color='white'
+                  />
+                </span>
               </label>
             ))}
           </div>

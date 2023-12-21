@@ -36,7 +36,7 @@ export async function generateMetadata({
 }
 
 export default async function ProductPage({ params }: ProductProps) {
-  const { id, images, name, price, sizes } = await getProduct(params.slug)
+  const { id, images, name, price } = await getProduct(params.slug)
 
   const imageUrl = images[0].url
 

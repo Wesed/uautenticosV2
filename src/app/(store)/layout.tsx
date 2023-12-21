@@ -1,7 +1,5 @@
 import { Header } from '@/components/header'
-import '../globals.css'
 import { CartProvider } from '@/contexts/cart-context'
-import { SidebarFilter } from './(home)/components/sidebar-filter/sidebar-container'
 
 export default function StoreLayout({
   children,

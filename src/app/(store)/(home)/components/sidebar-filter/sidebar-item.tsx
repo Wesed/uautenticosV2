@@ -1,6 +1,7 @@
 import * as Accordion from '@radix-ui/react-accordion'
 import { ChevronDown } from 'lucide-react'
 import { ReactNode } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface SidebarItemProps {
   filter: string
@@ -20,7 +21,19 @@ export function SidebarItem({ filter, value, children }: SidebarItemProps) {
         </Accordion.Trigger>
         <ChevronDown className='transition-transform group-data-[state=open]:rotate-180' />
       </Accordion.Header>
-      <Accordion.Content className='p-3'>{children}</Accordion.Content>
+      <Accordion.Content className='px-3 pb-3'>
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{
+            scale: 1,
+            opacity: 1,
+            transition: { type: 'spring', duration: 0.3 },
+          }}
+          exit={{ scale: 0, opacity: 0, transition: { duration: 0.1 } }}
+        >
+          {children}
+        </motion.div>
+      </Accordion.Content>
     </Accordion.Item>
   )
 }
