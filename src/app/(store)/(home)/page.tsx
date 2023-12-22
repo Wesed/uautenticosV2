@@ -17,7 +17,7 @@ export default async function Home() {
   const products = await getProducts()
 
   return (
-    <div className='grid grid-cols-products gap-10'>
+    <div className='grid-cols-productsMobile grid gap-3 px-3 md:gap-10 xl:grid-cols-products'>
       {products?.map((prod, i) => <ProductItem key={i} i={i} prod={prod} />)}
     </div>
   )

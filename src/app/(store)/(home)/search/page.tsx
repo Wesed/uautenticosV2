@@ -51,7 +51,7 @@ export default async function SearchPage({ searchParams }: SearchProps) {
   )
 
   return (
-    <div className='flex h-full flex-col gap-5'>
+    <div className='flex h-full flex-col gap-5 px-3'>
       <div className='flex gap-2'>
         <span className='whitespace-nowrap'>Resultados para:</span>
         <div className='flex flex-wrap divide-x divide-white/20'>
@@ -71,7 +71,7 @@ export default async function SearchPage({ searchParams }: SearchProps) {
           ))}
         </div>
       </div>
-      <div className='grid h-full grid-cols-products gap-10'>
+      <div className='grid-cols-productsMobile grid gap-3 md:gap-10 xl:grid-cols-products'>
         {products.length > 0 ? (
           products?.map((prod, i) => <ProductItem key={i} i={i} prod={prod} />)
         ) : (

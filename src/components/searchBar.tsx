@@ -26,7 +26,10 @@ export function SearchBar() {
   }
 
   return (
-    <form onSubmit={handleSearch} className='relative'>
+    <form
+      onSubmit={handleSearch}
+      className='relative col-span-full row-start-2 w-full md:col-auto md:col-start-2 md:row-start-1'
+    >
       <input
         name='query'
         defaultValue={query ?? ''}

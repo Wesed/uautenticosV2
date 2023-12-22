@@ -20,25 +20,24 @@ export function ProductItem({ i, prod }: ProductItemProps) {
       animate={{ scale: 1 }}
       exit={{ scale: 0 }}
       transition={{ delay: i / 15 }}
-      className=''
     >
       <Link
         href={`/products/${prod.slug}`}
         prefetch={false}
         className={twMerge(
-          'h-[250px]',
-          'group relative flex items-center justify-center',
-          'cursor-pointer overflow-hidden rounded-lg bg-background ',
+          'h-[350px] md:h-[250px]',
+          'group relative flex justify-center md:items-center',
+          'cursor-pointer overflow-hidden rounded-lg',
         )}
       >
         <ImageProd srcProp={prod.images} />
         <footer
           className={twMerge(
             'flex items-center justify-between',
-            'absolute bottom-1 left-1 right-1 translate-y-[105%]',
-            'rounded-md bg-black/60 p-3 opacity-0',
+            'absolute -left-2 bottom-8 md:bottom-1 md:left-1 md:right-1 xl:translate-y-[105%]',
+            'rounded-md p-3 md:bg-black/60',
             'transition-all duration-200 ease-in-out',
-            'opacity-100 group-hover:translate-y-0',
+            'group-hover:translate-y-0',
           )}
         >
           <div className='flex flex-col gap-1'>
@@ -49,7 +48,7 @@ export function ProductItem({ i, prod }: ProductItemProps) {
           </div>
           <div
             className={twMerge(
-              'rounded-md transition-colors',
+              'hidden rounded-md transition-colors md:flex',
               'bg-gray800 p-2 text-white',
               'hover:bg-gray100 hover:text-gray800',
             )}

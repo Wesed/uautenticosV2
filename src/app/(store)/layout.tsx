@@ -8,7 +8,7 @@ export default function StoreLayout({
 }) {
   return (
     <CartProvider>
-      <div className='mx-auto grid min-h-screen w-full max-w-widthProject grid-rows-app gap-20 p-10'>
+      <div className='min-h-screen w-full xl:mx-auto xl:grid xl:max-w-widthProject xl:grid-rows-app xl:gap-20 xl:p-10'>
         <Header />
         {children}
       </div>

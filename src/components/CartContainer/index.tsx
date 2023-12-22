@@ -43,7 +43,7 @@ export function CartContainer() {
   }, [items])
 
   return (
-    <div ref={containerRef} className='ml-auto'>
+    <div ref={containerRef} className='col-start-3 ml-auto'>
       <button
         onClick={() => {
           setOpen(!open)

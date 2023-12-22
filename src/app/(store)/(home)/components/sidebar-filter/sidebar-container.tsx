@@ -243,7 +243,7 @@ export function SidebarFilter() {
   }
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='hidden flex-col gap-2 bg-black md:flex'>
       <div className='mb-3 flex items-center justify-between'>
         <span className='px-1 text-gray300'>Filtrar por:</span>
         <button
