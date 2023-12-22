@@ -21,8 +21,8 @@ export function Images({ srcProp }: ImageProps) {
           exit={{ scale: 0 }}
           transition={{ delay: i / 15 }}
           className={twMerge(
-            'h-[350px] w-[350px]',
-            'items-center justify-center p-1',
+            'h-[350px] w-[350px] overflow-hidden',
+            'flex items-center justify-center',
             'bg-gray800',
             `${i % 2 === 0 ? 'rounded-l-lg' : 'rounded-r-lg'}`,
           )}
@@ -33,7 +33,7 @@ export function Images({ srcProp }: ImageProps) {
               alt=''
               width={800}
               height={800}
-              className='max-h-[350px] object-cover'
+              className='h-[350px] w-[350px] object-cover'
               quality={100}
               priority
             />

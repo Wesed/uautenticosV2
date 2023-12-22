@@ -16,11 +16,10 @@ export interface Product {
 }
 
 export interface FilterProps {
-  params: {
-    size?: string
-    gender?: string
-    color?: string
-    price?: number
-    brand?: string
-  }
+  q?: string
+  size?: number[]
+  gender?: string[]
+  color?: string
+  price?: number
+  brand?: string[]
 }

@@ -45,8 +45,10 @@ export default async function ProductPage({ params }: ProductProps) {
       <Images srcProp={images} />
 
       <div className='flex flex-col items-start justify-start'>
-        <h2 className='text-3xl font-bold leading-tight'>{name}</h2>
-        <p className='mt-2 text-lg text-gray400'>description</p>
+        <h2 className='whitespace-nowrap text-3xl font-bold leading-tight'>
+          {name}
+        </h2>
+        {/* <p className='mt-2 text-lg text-gray400'>description</p> */}
 
         <div className='my-8 flex flex-col items-start gap-4 text-sm text-gray400'>
           <div className='flex items-center gap-3'>

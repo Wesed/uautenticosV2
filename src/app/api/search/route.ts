@@ -1,15 +1,6 @@
 import { z } from 'zod'
 import type { NextRequest } from 'next/server'
-import { Product } from '@/data/types/product'
-
-interface FilterProps {
-  q?: string
-  size?: number[]
-  gender?: string[]
-  color?: string
-  price?: number
-  brand?: string[]
-}
+import { FilterProps, Product } from '@/data/types/product'
 
 const conditions: { [key: string]: string } = {
   size: '_contains_some',

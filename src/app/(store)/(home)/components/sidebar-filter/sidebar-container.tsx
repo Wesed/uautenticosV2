@@ -133,7 +133,7 @@ export function SidebarFilter() {
         : '/search'
 
       filters.forEach((filterKey) => {
-        if (filter[filterKey]) {
+        if (filter[filterKey] && filter[filterKey].length > 0) {
           filterString += filterString.includes('?')
             ? `&${filterKey}=${filter[filterKey]}`
             : `?${filterKey}=${filter[filterKey]}`
@@ -148,6 +148,8 @@ export function SidebarFilter() {
 
       if (!filterString.endsWith('/search')) {
         router.push(filterString)
+      } else {
+        router.push('/')
       }
     }
 

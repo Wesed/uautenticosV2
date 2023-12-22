@@ -1,5 +1,5 @@
 import { api } from '@/data/api'
-import { Product } from '@/data/types/product'
+import { FilterProps, Product } from '@/data/types/product'
 import { priceFormatter } from '@/utils/priceFormatter'
 import { twMerge } from 'tailwind-merge'
 import { ImageProd } from '../components/image-prod'
@@ -19,6 +19,15 @@ interface SearchProps {
   }
 }
 
+const translations = {
+  q: 'busca',
+  size: 'tamanho(s)',
+  gender: 'gênero',
+  brand: 'marca',
+  color: 'cor',
+  priceRange: 'preço',
+}
+
 async function searchProducts(params: string): Promise<Product[]> {
   const res = await api(`/search?${params}`, {
     cache: 'no-cache',
@@ -32,16 +41,36 @@ async function searchProducts(params: string): Promise<Product[]> {
 
 export default async function SearchPage({ searchParams }: SearchProps) {
   const params = new URLSearchParams(searchParams as string).toString()
-  const { q: query } = searchParams
   const products = await searchProducts(params)
 
-  // se acessar a pagina sem busca, retorna ao inicio
+  const translateParams = Object.fromEntries(
+    Object.entries(searchParams).map(([chave, valor]) => [
+      translations[chave as keyof typeof translations] || chave,
+      valor,
+    ]),
+  )
 
   return (
     <div className='flex h-full flex-col gap-5'>
-      <span>
-        Resultados para: <span className='font-bold'>{query}</span>
-      </span>
+      <div className='flex gap-2'>
+        <span className='whitespace-nowrap'>Resultados para:</span>
+        <div className='flex flex-wrap divide-x divide-white/20'>
+          {Object.entries(translateParams).map(([field, value]) => (
+            <span className='px-3' key={field}>
+              {field === 'preço' ? (
+                <>
+                  {field} à partir de:
+                  <span className='font-bold'>R$ {value}</span>
+                </>
+              ) : (
+                <>
+                  {field}: <span className='font-bold'>{value}</span>
+                </>
+              )}
+            </span>
+          ))}
+        </div>
+      </div>
       <div className='grid h-full grid-cols-products gap-10'>
         {products.length > 0 ? (
           products?.map((prod, i) => <ProductItem key={i} i={i} prod={prod} />)

@@ -4,9 +4,10 @@ import { ProductItem } from './components/products-item'
 
 async function getProducts(): Promise<Product[]> {
   const res = await api('/products', {
-    next: {
-      revalidate: 60 * 60 * 24, // 24 hours
-    },
+    cache: 'no-store',
+    // next: {
+    //   revalidate: 60 * 60 * 24, // 24 hours
+    // },
   })
   const products = await res.json()
   return products
