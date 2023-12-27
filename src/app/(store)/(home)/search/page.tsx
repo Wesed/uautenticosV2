@@ -71,7 +71,7 @@ export default async function SearchPage({ searchParams }: SearchProps) {
           ))}
         </div>
       </div>
-      <div className='grid-cols-productsMobile grid gap-3 md:gap-10 xl:grid-cols-products'>
+      <div className='grid grid-cols-productsMobile justify-between md:gap-10 xl:grid-cols-products'>
         {products.length > 0 ? (
           products?.map((prod, i) => <ProductItem key={i} i={i} prod={prod} />)
         ) : (

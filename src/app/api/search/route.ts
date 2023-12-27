@@ -1,6 +1,6 @@
-import { z } from 'zod'
 import type { NextRequest } from 'next/server'
 import { FilterProps, Product } from '@/data/types/product'
+import fuzzball, { extract } from 'fuzzball'
 
 const conditions: { [key: string]: string } = {
   size: '_contains_some',
@@ -38,6 +38,30 @@ const types: FilterTypes = {
   brand: 'String',
 }
 
+const dic: string[] = [
+  'tenis',
+  'branco',
+  'amarelo',
+  'azul',
+  'verde',
+  'preto',
+  'rosa',
+  'nude',
+  'rainbow',
+  'confortavel',
+  'academia',
+]
+
+function correctWord(word: string) {
+  const similars = extract(word, dic)
+
+  if (similars.length > 0) {
+    return similars.shift()?.[0]
+  } else {
+    return word
+  }
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
 
@@ -50,7 +74,7 @@ export async function GET(request: NextRequest) {
   for (const [key, value] of searchParams.entries()) {
     switch (key) {
       case 'q':
-        filterObj.q = value
+        filterObj.q = correctWord(value)
         break
       case 'size':
         filterObj.size?.push(Number(value))

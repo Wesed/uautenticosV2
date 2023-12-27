@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: ProductProps) {
   const imageUrl = images[0].url
 
   return (
-    <main className='mx-auto grid max-w-widthProject grid-cols-product items-stretch gap-16'>
+    <main className='mx-auto mb-10 flex max-w-widthProject grid-cols-product flex-col items-stretch gap-16 px-5 xl:grid'>
       <Images srcProp={images} />
 
       <div className='flex flex-col items-start justify-start'>

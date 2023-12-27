@@ -25,23 +25,24 @@ export function ProductItem({ i, prod }: ProductItemProps) {
         href={`/products/${prod.slug}`}
         prefetch={false}
         className={twMerge(
-          'h-[350px] md:h-[250px]',
+          'h-[250px] md:h-[250px]',
           'group relative flex justify-center md:items-center',
-          'cursor-pointer overflow-hidden rounded-lg',
+          'cursor-pointer overflow-hidden rounded-md',
         )}
       >
         <ImageProd srcProp={prod.images} />
         <footer
           className={twMerge(
-            'flex items-center justify-between',
-            'absolute -left-2 bottom-8 md:bottom-1 md:left-1 md:right-1 xl:translate-y-[105%]',
+            'absolute -left-2 bottom-1 md:left-1 md:right-1 xl:translate-y-[105%]',
             'rounded-md p-3 md:bg-black/60',
             'transition-all duration-200 ease-in-out',
             'group-hover:translate-y-0',
           )}
         >
           <div className='flex flex-col gap-1'>
-            <strong className='text-sm'>{prod.name}</strong>
+            <strong className='w-[190px] overflow-hidden text-ellipsis whitespace-nowrap text-sm'>
+              {prod.name}
+            </strong>
             <span className=' font-bold text-green300'>
               {priceFormatter(prod.price)}
             </span>

@@ -22,3 +22,11 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #1cc1637 inset;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+.swiper-pagination-bullet {
+  background-color: #FFF !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #FFF !important;
+}

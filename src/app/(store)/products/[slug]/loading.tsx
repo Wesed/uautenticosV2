@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 
 export default function HomeLoading() {
   return (
-    <main className='mx-auto grid max-w-widthProject grid-cols-product items-stretch gap-16'>
+    <main className='mx-auto grid max-w-widthProject grid-cols-productsMobile items-stretch gap-16 xl:grid-cols-product'>
       <div className='grid grid-cols-products gap-10'>
         {[...Array(4)].map((_, i) => (
           <Skeleton

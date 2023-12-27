@@ -30,7 +30,7 @@ const config: Config = {
       },
       gridTemplateColumns: {
         products: 'repeat(auto-fit, 250px)',
-        productsMobile: 'repeat(auto-fit, 200px)',
+        productsMobile: 'repeat(auto-fit, 190px)',
         product: 'minmax(44rem, 1fr) 20rem',
         sidebarFilter: '18rem 1fr',
       },

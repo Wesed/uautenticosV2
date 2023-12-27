@@ -1,11 +1,23 @@
 'use client'
 import { ImageProps } from '@/data/types/product'
+import UseMedia from '@/hooks/useMedia'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Zoom from 'react-medium-image-zoom'
 import { twMerge } from 'tailwind-merge'
+import { ImageSlider } from './images-slider'
 
 export function Images({ srcProp }: ImageProps) {
+  const isMobile = UseMedia('(max-width: 640px)')
+
+  if (isMobile) {
+    return (
+      <div className=''>
+        <ImageSlider srcProp={srcProp} />
+      </div>
+    )
+  }
+
   return (
     <div
       className={twMerge(

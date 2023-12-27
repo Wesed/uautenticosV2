@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 
 export default function HomeLoading() {
   return (
-    <div className='grid grid-cols-products gap-10'>
+    <div className='grid grid-cols-productsMobile justify-between gap-y-5 xl:grid-cols-products xl:gap-10'>
       {[...Array(8)].map((_, i) => (
         <Skeleton
           key={i}

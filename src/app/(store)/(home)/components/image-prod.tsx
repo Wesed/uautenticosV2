@@ -13,7 +13,7 @@ export function ImageProd({ srcProp }: ImageProps) {
       alt=''
       width={520}
       height={480}
-      className='h-[250px] w-full rounded-lg bg-background object-cover'
+      className='h-[180px] w-full rounded-md bg-background object-cover'
       quality={100}
       priority
       onMouseOver={() => {

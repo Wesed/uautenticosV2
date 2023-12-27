@@ -63,8 +63,8 @@ export function CartContainer() {
             animate={{ scale: open ? 1 : 0 }}
             exit={{ scale: 0 }}
             className={twMerge(
-              'fixed right-0 top-0 z-10 flex-col justify-center',
-              'min-h-screen w-[480px]',
+              ' fixed right-0 top-0 z-10 w-full flex-col justify-center',
+              'min-h-screen xl:w-[480px]',
               'rounded-md bg-gray800 px-12 shadow-3xl',
               `${open ? 'flex' : 'hidden'}`,
             )}
